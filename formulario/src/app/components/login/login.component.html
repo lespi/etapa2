@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-lg-6 col-sm-12">
+            <mat-form-field class="full-width2">
+              <mat-select [formControl]="usuarioCtrl" 
+                          placeholder="Usuario" 
+                          #singleSelectUsuario
+                          (selectionChange)="usuarioSeleccionado()">
+                <mat-option>
+                  <ngx-mat-select-search [formControl]="usuarioFilterCtrl"
+                                          [placeholderLabel]="'Buscar usuario...'"  
+                                          [noEntriesFoundLabel]="'No se encontraron resultados'"
+                                          [preventHomeEndKeyPropagation]="true">
+                    <mat-icon ngxMatSelectSearchClear>x</mat-icon>
+                  </ngx-mat-select-search>
+                </mat-option>
+          
+                <mat-option *ngFor="let usuario of filteredUsuarios | async" [value]="usuario">
+                  {{usuario.per_nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+    </div>
+    <div class="col-lg-6 col-sm-12">
+        <mat-form-field class="full-width2">
+            <mat-select [formControl]="periodoCtrl" 
+                        placeholder="Periodo" 
+                        #singleSelectPeriodo>
+              <mat-option>
+                <ngx-mat-select-search [formControl]="periodoFilterCtrl"
+                                        [placeholderLabel]="'Buscar periodo...'"  
+                                        [noEntriesFoundLabel]="'No se encontraron resultados'"
+                                        [preventHomeEndKeyPropagation]="true">
+                  <mat-icon ngxMatSelectSearchClear>x</mat-icon>
+                </ngx-mat-select-search>
+              </mat-option>
+        
+              <mat-option *ngFor="let periodo of filteredPeriodos | async" [value]="periodo">
+                {{periodo.peri_fecha_anyo}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+    </div>
+  </div>

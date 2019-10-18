@@ -1,0 +1,13 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "Formulario-etapa2",
+    "id": "5fd2b319-5603-4deb-9798-a7214fd6f3ee",
+    "version": "1.0.3.3",
+    "includeClientSideAssets": true,
+    "isDomainIsolated": false
+  },
+  "paths": {
+    "zippedPackage": "solution/formulario-etapa2-spfx.sppkg"
+  }
+}

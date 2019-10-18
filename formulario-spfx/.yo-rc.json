@@ -1,0 +1,14 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "version": "1.8.2",
+    "libraryName": "formulario-spfx",
+    "libraryId": "5fd2b319-5603-4deb-9798-a7214fd6f3ee",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "formulario-spfx",
+    "framework": "none",
+    "isCreatingSolution": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}

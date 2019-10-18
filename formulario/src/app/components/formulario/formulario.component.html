@@ -1,0 +1,746 @@
+
+  <h1>Etapa 2 <small>¿Dónde quiero llegar?</small></h1>
+  <br>
+  <app-login (emitUsuarioActivo)="recibirUsuarioActivo($event)"></app-login>
+
+  <!--18/10/2019 Versión entrega a Cahuala-->
+  
+  <form [formGroup]="infoGeneralForm" (ngSubmit)="submitEtapa2()">
+
+      <mat-card>
+        <div class="row">
+          <div class="col-12">
+            <h3>Mis próximos desafíos</h3>
+            <p align="justify">Con el fin de escoger una trayectoria de carrera que te motive, acorde a tus fortalezas, debilidades  y motivaciones
+              , te invitamos investigar qué oportunidades existen y cómo éstas se ajustan a tu perfil.</p>
+            <p>Tus desafíos y motivaciones profesionales se concretan cuando identificas metas. La invitación es a investigar qué oportunidades existen y cómo éstas se ajustan a tu perfil. 
+            </p>
+                <p>Reflexiona sobre tus desafíos, tus deseos y proyecciones, manteniendo siempre presente tus fortalezas, debilidades y motivaciones.
+              </p>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-sm-12">
+              <div class="example-container mat-elevation-z4 example-small-box">
+                  <mat-form-field class="full-width">
+                    <textarea matInput formControlName="infg_area_desarrollo"
+                      placeholder="¿En qué áreas de la empresa quiero desarrollarme?"
+                      cdkTextareaAutosize> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis ipsum enim unde tempora corrupti qui ipsa distinctio assumenda, alias sequi fugit, sed, commodi quos facilis modi non nisi omnis porro.</textarea>
+                  </mat-form-field>
+                  <mat-form-field class="full-width">
+                    <textarea matInput formControlName="infg_area_desarrollo_ajuste_comp"
+                      placeholder="¿Cómo se ajusta(n) con mis fortalezas, debilidades y motivaciones?"
+                      cdkTextareaAutosize> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis ipsum enim unde tempora corrupti qui ipsa distinctio assumenda, alias sequi fugit, sed, commodi quos facilis modi non nisi omnis porro.</textarea>
+                  </mat-form-field>
+              </div>
+              
+            </div>
+            <div class="col-lg-6 col-sm-12">
+                <div class="example-container mat-elevation-z4 example-small-box">
+                  <mat-form-field class="full-width">
+                    <textarea matInput formControlName="infg_busqueda_desafio" placeholder="¿Qué desafíos estoy buscando?"
+                      cdkTextareaAutosize> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis ipsum enim unde tempora corrupti qui ipsa distinctio assumenda, alias sequi fugit, sed, commodi quos facilis modi non nisi omnis porro.</textarea>
+                  </mat-form-field>
+                  <mat-form-field class="full-width">
+                    <textarea matInput formControlName="infg_busqueda_desafio_ajuste_com"
+                      placeholder="¿Cómo se ajusta(n) con mis fortalezas, debilidades y motivaciones?"
+                      cdkTextareaAutosize> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis ipsum enim unde tempora corrupti qui ipsa distinctio assumenda, alias sequi fugit, sed, commodi quos facilis modi non nisi omnis porro.</textarea>
+                  </mat-form-field>
+                  </div>
+
+                
+            </div>
+     
+      
+        </div>
+      
+        <button mat-raised-button 
+                class="submit-btn" 
+                id="boton1"
+                color="primary"  
+                type="submit"
+                [disabled]="guardando">Guardar</button>
+      </mat-card>
+
+  </form>
+
+  <br>
+  <form form [formGroup]="infoEspecificaForm" (ngSubmit)="submitEtapa2()">
+  <mat-card>
+
+    <h3>Posiciones de interés</h3>
+    <p>Investiga máximo 3 posiciones que sean de tu interés. <br>
+        Recoge la mayor cantidad de información sobre el cargo de tu interés y autocalifícate en cuando al grado de ajuste de tu perfil con los requerimientos. 
+        </p>
+    <br>
+
+    <mat-tab-group>
+
+        <mat-tab label="CARGO 1">
+              
+          <div class="row">
+            <div class="col-lg-12 col-sm-12">
+                <div formGroupName="infoEspecificaForm1">
+                <br>
+                <h5>CARGO 1</h5>
+
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <mat-form-field class="full-width">
+                            <mat-select #singleSelectCargo
+                                        [formControl]="cargoCtrl" 
+                                        placeholder="Cargo"
+                                        (selectionChange)="cargoSeleccionado(0)">
+                              <mat-option>
+                                <ngx-mat-select-search [formControl]="cargoFilterCtrl"
+                                                        [placeholderLabel]="'Buscar cargo...'"  
+                                                        [noEntriesFoundLabel]="'No se encontraron resultados'"
+                                                        [preventHomeEndKeyPropagation]="true">
+                                  <mat-icon ngxMatSelectSearchClear>x</mat-icon>
+                                </ngx-mat-select-search>
+                              </mat-option>
+                              <mat-option *ngFor="let cargo of filteredCargos | async" [value]="cargo">
+                                {{cargo.car_nombre}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                    </div>
+                    <!--
+                    <div class="col-lg-6 col-sm-12">
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Rotación del cargo"
+                                            formControlName="infe_rotacion">
+                          </mat-form-field>
+                    </div>
+                  -->
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Gerencia/Proyecto"
+                                            formControlName="infe_gerencia">
+                        </mat-form-field>
+                    </div>
+                    <!--
+                    <div class="col-lg-6 col-sm-12">
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Dirección" 
+                                            formControlName="infe_direccion">
+                        </mat-form-field>
+                    </div>
+                    -->
+                </div>
+                <mat-form-field class="full-width">
+                    <textarea matInput placeholder="Misión del Cargo"
+                                        cdkTextareaAutosize
+                                        formControlName="infe_mision"></textarea>
+                </mat-form-field>
+
+                <mat-accordion>
+                  <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>Requerimientos</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row form-group-border" *ngFor="let campo of camposRequerimientos">
+                        <!-- Sin campo año -->
+                        <div class="col-lg-10 col-sm-12" *ngIf="!campo.anyo">
+                            <mat-form-field class="full-width">
+                                <input matInput 
+                                      [placeholder]="campo.nombreMostrar"
+                                      [formControlName]="campo.nombreCampo">
+                              </mat-form-field>
+                        </div>
+                        <div class="col-lg-2 col-sm-12" *ngIf="!campo.anyo">
+                          <mat-form-field class="full-width">
+                            <mat-label>Ajuste</mat-label>
+                            <mat-select [formControlName]="campo.nombreCampoAjuste">
+                              <mat-option *ngFor="let ajuste of selectAjuste" [value]="ajuste.nompre">
+                                {{ajuste.nompre}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <!-- con campo año -->
+                        <div class="col-lg-8 col-sm-12" *ngIf="campo.anyo">
+                            <mat-form-field class="full-width">
+                                <input matInput [placeholder]="campo.nombreMostrar"
+                                                [formControlName]="campo.nombreCampo">
+                              </mat-form-field>
+                        </div>
+                        <div class="col-lg-2 col-sm-12" *ngIf="campo.anyo">
+                          <mat-form-field class="full-width">
+                              <input matInput placeholder="Años Experiencia"
+                                              [formControlName]="campo.anyo">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-2 col-sm-12" *ngIf="campo.anyo">
+                          <mat-form-field class="full-width">
+                            <mat-label>Ajuste</mat-label>
+                            <mat-select [formControlName]="campo.nombreCampoAjuste">
+                              <mat-option *ngFor="let ajuste of selectAjuste" [value]="ajuste.nompre">
+                                {{ajuste.nompre}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+
+                        
+                    </div>     
+                  </mat-expansion-panel>
+                
+                  <!--
+                  <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>Competencias Indispensables (para obtener el cargo y para ser exitoso/a en éste)</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row form-group-border" *ngFor="let campo of camposCompetencias">
+                      <div class="col-lg-10 col-sm-12">
+
+                            <mat-label>{{campo.nombreMostrar}}</mat-label>
+                            <mat-select [formControlName]="campo.nombreCampo">
+                              <mat-option *ngFor="let c of selectCompetencia" [value]="c">
+                                {{c}}
+                              </mat-option>
+                            </mat-select>
+                      </div>
+                    
+                      <div class="col-lg-2 col-sm-12">
+                        <mat-form-field class="full-width">
+                          <mat-label>Ajuste</mat-label>
+                          <mat-select [formControlName]="campo.nombreCampoAjuste">
+                            <mat-option *ngFor="let ajuste of selectAjuste" [value]="ajuste.nompre">
+                              {{ajuste.nompre}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </mat-expansion-panel>
+                -->
+                <!--
+                  <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>Condiciones</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row form-group-border" *ngFor="let campo of camposCondiciones">
+                        <div class="col-lg-10 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput [placeholder]="campo.nombreMostrar"
+                                                [formControlName]="campo.nombreCampo">
+                              </mat-form-field>
+                        </div>
+                        
+                        <div class="col-lg-2 col-sm-12">
+                          <mat-form-field class="full-width">
+                            <mat-label>Ajuste</mat-label>
+                            <mat-select [formControlName]="campo.nombreCampoAjuste">
+                              <mat-option *ngFor="let ajuste of selectAjuste" [value]="ajuste.nompre">
+                                {{ajuste.nompre}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                    </div>
+                  </mat-expansion-panel>
+                
+                -->
+                  <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>Motivaciones y Valores</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row form-group-border" *ngFor="let campo of camposMotivaciones; let i = index" [attr.data-index]="i">
+                      <div class="full-width"><label>{{selectMotivaciones[i]}}</label></div>
+                      
+                        <div class="col-lg-5 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput [placeholder]="campo.nombreMostrar"
+                                                [formControlName]="campo.nombreCampo">
+                              </mat-form-field>
+                        </div>
+                        <div class="col-lg-5 col-sm-12">
+                          <mat-form-field class="full-width">
+                              <input matInput [placeholder]="campo.nombreMostrar1"
+                                              [formControlName]="campo.nombreCampo1">
+                            </mat-form-field>
+                      </div>
+                        <div class="col-lg-2 col-sm-12">
+                          <mat-form-field class="full-width">
+                            <mat-label>Ajuste</mat-label>
+                            <mat-select [formControlName]="campo.nombreCampoAjuste">
+                              <mat-option *ngFor="let ajuste of selectAjuste" [value]="ajuste.nompre">
+                                {{ajuste.nompre}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                    </div>
+                  </mat-expansion-panel>
+                
+                </mat-accordion>
+            
+                  <br>
+              </div>
+            </div>
+          </div>    
+
+        </mat-tab>
+
+        <mat-tab label="CARGO 2">
+
+            <div class="row">
+                <div class="col-lg-12 col-sm-12">
+                    <div formGroupName="infoEspecificaForm2">
+                    <br>
+                    <h5>CARGO 2</h5>
+    
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <mat-select #singleSelectCargo2
+                                            [formControl]="cargo2Ctrl" 
+                                            placeholder="Cargo"
+                                            (selectionChange)="cargoSeleccionado(1)">
+                                  <mat-option>
+                                    <ngx-mat-select-search [formControl]="cargo2FilterCtrl"
+                                                            [placeholderLabel]="'Buscar cargo...'"  
+                                                            [noEntriesFoundLabel]="'No se encontraron resultados'"
+                                                            [preventHomeEndKeyPropagation]="true">
+                                      <mat-icon ngxMatSelectSearchClear>x</mat-icon>
+                                    </ngx-mat-select-search>
+                                  </mat-option>
+                                  <mat-option *ngFor="let cargo of filteredCargos2 | async" [value]="cargo">
+                                    {{cargo.car_nombre}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                        </div>
+                        <!--
+                        <div class="col-lg-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput placeholder="Rotación del cargo"
+                                                formControlName="infe_rotacion">
+                              </mat-form-field>
+                        </div>
+                        -->
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput placeholder="Gerencia/Proyecto"
+                                                formControlName="infe_gerencia">
+                            </mat-form-field>
+                        </div>
+                        <!--
+                        <div class="col-lg-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput placeholder="Dirección" 
+                                                formControlName="infe_direccion">
+                            </mat-form-field>
+                        </div>
+                      -->
+                    </div>
+                    <mat-form-field class="full-width">
+                        <textarea matInput placeholder="Misión del Cargo"
+                                            cdkTextareaAutosize
+                                            formControlName="infe_mision"></textarea>
+                    </mat-form-field>
+    
+                    <mat-accordion>
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>Requerimientos</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="row form-group-border" *ngFor="let campo of camposRequerimientos">
+                            <!-- Sin campo año -->
+                            <div class="col-lg-10 col-sm-12" *ngIf="!campo.anyo">
+                                <mat-form-field class="full-width">
+                                    <input matInput 
+                                          [placeholder]="campo.nombreMostrar"
+                                          [formControlName]="campo.nombreCampo">
+                                  </mat-form-field>
+                            </div>
+                            <div class="col-lg-2 col-sm-12" *ngIf="!campo.anyo">
+                              <mat-form-field class="full-width">
+                                <mat-label>Ajuste</mat-label>
+                                <mat-select [formControlName]="campo.nombreCampoAjuste">
+                                  <mat-option *ngFor="let ajuste of selectAjuste" [value]="ajuste.nompre">
+                                    {{ajuste.nompre}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                            <!-- con campo año -->
+                            <div class="col-lg-8 col-sm-12" *ngIf="campo.anyo">
+                                <mat-form-field class="full-width">
+                                    <input matInput [placeholder]="campo.nombreMostrar"
+                                                    [formControlName]="campo.nombreCampo">
+                                  </mat-form-field>
+                            </div>
+                            <div class="col-lg-2 col-sm-12" *ngIf="campo.anyo">
+                              <mat-form-field class="full-width">
+                                  <input matInput placeholder="Años Experiencia"
+                                                  [formControlName]="campo.anyo">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-2 col-sm-12" *ngIf="campo.anyo">
+                              <mat-form-field class="full-width">
+                                <mat-label>Ajuste</mat-label>
+                                <mat-select [formControlName]="campo.nombreCampoAjuste">
+                                  <mat-option *ngFor="let ajuste of selectAjuste" [value]="ajuste.nompre">
+                                    {{ajuste.nompre}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+    
+                            
+                        </div>     
+                      </mat-expansion-panel>
+                    
+                    <!--
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>Competencias Indispensables (para obtener el cargo y para ser exitoso/a en éste)</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="row form-group-border" *ngFor="let campo of camposCompetencias">
+                          <div class="col-lg-10 col-sm-12">
+
+                                <mat-label>{{campo.nombreMostrar}}</mat-label>
+                                <mat-select [formControlName]="campo.nombreCampo">
+                                  <mat-option *ngFor="let c of selectCompetencia" [value]="c">
+                                    {{c}}
+                                  </mat-option>
+                                </mat-select>
+                          </div>
+                        
+                          <div class="col-lg-2 col-sm-12">
+                            <mat-form-field class="full-width">
+                              <mat-label>Ajuste</mat-label>
+                              <mat-select [formControlName]="campo.nombreCampoAjuste">
+                                <mat-option *ngFor="let ajuste of selectAjuste" [value]="ajuste.nompre">
+                                  {{ajuste.nompre}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </mat-expansion-panel>
+                    -->
+                    <!--
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>Condiciones</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="row form-group-border" *ngFor="let campo of camposCondiciones">
+                            <div class="col-lg-10 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput [placeholder]="campo.nombreMostrar"
+                                                    [formControlName]="campo.nombreCampo">
+                                  </mat-form-field>
+                            </div>
+                            
+                            <div class="col-lg-2 col-sm-12">
+                              <mat-form-field class="full-width">
+                                <mat-label>Ajuste</mat-label>
+                                <mat-select [formControlName]="campo.nombreCampoAjuste">
+                                  <mat-option *ngFor="let ajuste of selectAjuste" [value]="ajuste.nompre">
+                                    {{ajuste.nompre}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                        </div>
+                      </mat-expansion-panel>
+                    -->
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>Motivaciones y Valores</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="row form-group-border" *ngFor="let campo of camposMotivaciones; let i = index" [attr.data-index]="i">
+                          <div class="full-width"><label>{{selectMotivaciones[i]}}</label></div>
+                          
+                            <div class="col-lg-5 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput [placeholder]="campo.nombreMostrar"
+                                                    [formControlName]="campo.nombreCampo">
+                                  </mat-form-field>
+                            </div>
+                            <div class="col-lg-5 col-sm-12">
+                              <mat-form-field class="full-width">
+                                  <input matInput [placeholder]="campo.nombreMostrar1"
+                                                  [formControlName]="campo.nombreCampo1">
+                                </mat-form-field>
+                          </div>
+                            <div class="col-lg-2 col-sm-12">
+                              <mat-form-field class="full-width">
+                                <mat-label>Ajuste</mat-label>
+                                <mat-select [formControlName]="campo.nombreCampoAjuste">
+                                  <mat-option *ngFor="let ajuste of selectAjuste" [value]="ajuste.nompre">
+                                    {{ajuste.nompre}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                        </div>
+                      </mat-expansion-panel>
+                    
+                    </mat-accordion>
+                
+                      <br>
+                  </div>
+                </div>
+              </div>  
+
+        </mat-tab>
+        <mat-tab label="CARGO 3">
+
+            <div class="row">
+                <div class="col-lg-12 col-sm-12">
+                    <div formGroupName="infoEspecificaForm3">
+                    <br>
+                    <h5>CARGO 3</h5>
+    
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <mat-select #singleSelectCargo3
+                                            [formControl]="cargo3Ctrl" 
+                                            placeholder="Cargo"
+                                            (selectionChange)="cargoSeleccionado(2)">
+                                  <mat-option>
+                                    <ngx-mat-select-search [formControl]="cargo3FilterCtrl"
+                                                            [placeholderLabel]="'Buscar cargo...'"  
+                                                            [noEntriesFoundLabel]="'No se encontraron resultados'"
+                                                            [preventHomeEndKeyPropagation]="true">
+                                      <mat-icon ngxMatSelectSearchClear>x</mat-icon>
+                                    </ngx-mat-select-search>
+                                  </mat-option>
+                                  <mat-option *ngFor="let cargo of filteredCargos3 | async" [value]="cargo">
+                                    {{cargo.car_nombre}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                        </div>
+                        <!--
+                        <div class="col-lg-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput placeholder="Rotación del cargo"
+                                                formControlName="infe_rotacion">
+                              </mat-form-field>
+                        </div>
+                      -->
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput placeholder="Gerencia/Proyecto"
+                                                formControlName="infe_gerencia">
+                            </mat-form-field>
+                        </div>
+                        <!--
+                        <div class="col-lg-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput placeholder="Dirección" 
+                                                formControlName="infe_direccion">
+                            </mat-form-field>
+                        </div>
+                      -->
+                    </div>
+                    <mat-form-field class="full-width">
+                        <textarea matInput placeholder="Misión del Cargo"
+                                            cdkTextareaAutosize
+                                            formControlName="infe_mision"></textarea>
+                    </mat-form-field>
+    
+                    <mat-accordion>
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>Requerimientos</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="row form-group-border" *ngFor="let campo of camposRequerimientos">
+                            <!-- Sin campo año -->
+                            <div class="col-lg-10 col-sm-12" *ngIf="!campo.anyo">
+                                <mat-form-field class="full-width">
+                                    <input matInput 
+                                          [placeholder]="campo.nombreMostrar"
+                                          [formControlName]="campo.nombreCampo">
+                                  </mat-form-field>
+                            </div>
+                            <div class="col-lg-2 col-sm-12" *ngIf="!campo.anyo">
+                              <mat-form-field class="full-width">
+                                <mat-label>Ajuste</mat-label>
+                                <mat-select [formControlName]="campo.nombreCampoAjuste">
+                                  <mat-option *ngFor="let ajuste of selectAjuste" [value]="ajuste.nompre">
+                                    {{ajuste.nompre}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                            <!-- con campo año -->
+                            <div class="col-lg-8 col-sm-12" *ngIf="campo.anyo">
+                                <mat-form-field class="full-width">
+                                    <input matInput [placeholder]="campo.nombreMostrar"
+                                                    [formControlName]="campo.nombreCampo">
+                                  </mat-form-field>
+                            </div>
+                            <div class="col-lg-2 col-sm-12" *ngIf="campo.anyo">
+                              <mat-form-field class="full-width">
+                                  <input matInput placeholder="Años Experiencia"
+                                                  [formControlName]="campo.anyo">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-2 col-sm-12" *ngIf="campo.anyo">
+                              <mat-form-field class="full-width">
+                                <mat-label>Ajuste</mat-label>
+                                <mat-select [formControlName]="campo.nombreCampoAjuste">
+                                  <mat-option *ngFor="let ajuste of selectAjuste" [value]="ajuste.nompre">
+                                    {{ajuste.nompre}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+    
+                            
+                        </div>     
+                      </mat-expansion-panel>
+                    
+                      <!--
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>Competencias Indispensables (para obtener el cargo y para ser exitoso/a en éste)</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="row form-group-border" *ngFor="let campo of camposCompetencias">
+                          <div class="col-lg-10 col-sm-12">
+
+                                <mat-label>{{campo.nombreMostrar}}</mat-label>
+                                <mat-select [formControlName]="campo.nombreCampo">
+                                  <mat-option *ngFor="let c of selectCompetencia" [value]="c">
+                                    {{c}}
+                                  </mat-option>
+                                </mat-select>
+                          </div>
+                        
+                          <div class="col-lg-2 col-sm-12">
+                            <mat-form-field class="full-width">
+                              <mat-label>Ajuste</mat-label>
+                              <mat-select [formControlName]="campo.nombreCampoAjuste">
+                                <mat-option *ngFor="let ajuste of selectAjuste" [value]="ajuste.nompre">
+                                  {{ajuste.nompre}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </mat-expansion-panel>
+                    -->
+                      <!--
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>Condiciones</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="row form-group-border" *ngFor="let campo of camposCondiciones">
+                            <div class="col-lg-10 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput [placeholder]="campo.nombreMostrar"
+                                                    [formControlName]="campo.nombreCampo">
+                                  </mat-form-field>
+                            </div>
+                            
+                            <div class="col-lg-2 col-sm-12">
+                              <mat-form-field class="full-width">
+                                <mat-label>Ajuste</mat-label>
+                                <mat-select [formControlName]="campo.nombreCampoAjuste">
+                                  <mat-option *ngFor="let ajuste of selectAjuste" [value]="ajuste.nompre">
+                                    {{ajuste.nompre}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                        </div>
+                      </mat-expansion-panel>
+                    -->
+
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>Motivaciones y Valores</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="row form-group-border" *ngFor="let campo of camposMotivaciones; let i = index" [attr.data-index]="i">
+                          <div class="full-width"><label>{{selectMotivaciones[i]}}</label></div>
+                          
+                            <div class="col-lg-5 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput [placeholder]="campo.nombreMostrar"
+                                                    [formControlName]="campo.nombreCampo">
+                                  </mat-form-field>
+                            </div>
+                            <div class="col-lg-5 col-sm-12">
+                              <mat-form-field class="full-width">
+                                  <input matInput [placeholder]="campo.nombreMostrar1"
+                                                  [formControlName]="campo.nombreCampo1">
+                                </mat-form-field>
+                          </div>
+                            <div class="col-lg-2 col-sm-12">
+                              <mat-form-field class="full-width">
+                                <mat-label>Ajuste</mat-label>
+                                <mat-select [formControlName]="campo.nombreCampoAjuste">
+                                  <mat-option *ngFor="let ajuste of selectAjuste" [value]="ajuste.nompre">
+                                    {{ajuste.nompre}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                        </div>
+                      </mat-expansion-panel>
+                    
+                    </mat-accordion>
+                
+                      <br>
+                      
+                  </div>
+                </div>
+              </div>  
+
+        </mat-tab>
+        <mat-tab label="MAPA CARGOS VP " href="/sites/mpdc/app/SitePages/MapaCargo.aspx">
+          <br>  
+            <div class="col-lg-6 col-sm-6 text-right">
+                <button mat-raised-button
+                        color="warn" 
+                        (click)="goToLinkSelf2('https://o365saven.sharepoint.com/sites/mpdc/app/SitePages/MapaCargo.aspx')">Ir al Mapa de Cargpos</button>
+              </div>
+            <br>
+        </mat-tab>
+
+      </mat-tab-group>
+      <div class="row">
+        <div class="col-lg-6 col-sm-6">
+          <button mat-raised-button 
+                  id="boton2"
+                  class="submit-btn" 
+                  color="primary"  
+                  type="submit"
+                  [disabled]="guardando">Guardar</button>
+        </div>
+        <div class="col-lg-2 col-sm-2 text-right">
+          <button mat-raised-button
+                  color="primary" 
+                  (click)="goToLinkSelf('https://o365saven.sharepoint.com/sites/mpdc/app/SitePages/MP-Etapa1.aspx')">Anterior</button>
+        </div>
+        <div class="col-lg-2 col-sm-2 text-right">
+            <button mat-raised-button
+                    color="warn" 
+                    (click)="goToLinkSelf('/sites/mpdc/app/SitePages/MP-Resumen.aspx')">Resumen</button>
+          </div>
+        <div class="col-lg-2 col-sm-2 text-right">
+          <button mat-raised-button 
+                  color="primary" 
+                  (click)="goToLinkSelf('https://o365saven.sharepoint.com/sites/mpdc/app/SitePages/MP-Etapa3.aspx')">Siguiente</button>
+        </div>
+      </div>
+      
+</mat-card>
+</form>
+<br>
+<br>
+<br>
